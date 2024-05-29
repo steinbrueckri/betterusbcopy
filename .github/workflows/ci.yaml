@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  deploy:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,7 +15,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y make shellcheck ruby
-        gem install mdl
+        sudo gem install mdl
 
     - name: Run lint
       run: make lint
