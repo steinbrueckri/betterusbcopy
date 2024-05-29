@@ -1,7 +1,9 @@
-.PHONY: lint shellcheck mdl setup-udev deploy-betterusbcopy
+.PHONY: lint shellcheck mdl deploy setup-udev deploy-betterusbcopy
 
 # load config
 include .env
+
+all: lint deploy
 
 lint: shellcheck mdl
 
