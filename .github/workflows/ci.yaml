@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y make shellcheck ruby
+        gem install mdl
+
+    - name: Run lint
+      run: make lint
