@@ -92,7 +92,7 @@ check_directory "$DEST"
 # Create folder with datetime
 DATETIME=$(date '+%d%m%Y%H%M%S')
 FINALDEST="$DEST/$DATETIME"
-LOGFILE="$FINALDEST/usbcopy.log"
+LOGFILE="$FINALDEST/betterusbcopy.log"
 create_directory "$FINALDEST"
 
 log "Script started."
@@ -124,7 +124,7 @@ else
     exit 1
 fi
 
-umount $SRC
+umount "$SRC"
 log "Unmounted $SRC."
 
 # Turn off the USBCopy LED
