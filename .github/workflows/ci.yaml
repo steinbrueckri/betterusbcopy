@@ -18,4 +18,6 @@ jobs:
         sudo gem install mdl
 
     - name: Run lint
-      run: make lint
+      run: |
+        touch .env # create empty env file to run the lint task
+        make lint
