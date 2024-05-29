@@ -1,8 +1,7 @@
 .PHONY: lint shellcheck mdl setup-udev deploy-betterusbcopy
 
-# defaults
-REMOTE_USER = admin
-REMOTE_HOST = nas02.local
+# load config
+include .env
 
 lint: shellcheck mdl
 

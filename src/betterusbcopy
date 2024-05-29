@@ -3,10 +3,8 @@
 ###############################################################################
 # config
 ###############################################################################
-SRC="/volumeUSB1/usbshare"               # Path to the SD card without trailing slash
-DEST="/volume1/Speicherkarten_import/"   # Destination directory on the NAS
-EMAIL="r.steinbrueck@pixel-combo.de"     # Email address for error notifications
-TIMEOUT=120                              # Timeout for waiting the source directory to be mounted
+# shellcheck disable=SC1091
+source /usr/etc/betterusbcopy.conf
 
 ###############################################################################
 # functions
