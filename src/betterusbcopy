@@ -19,7 +19,9 @@ log() {
 send_mail() {
     local status=$1
     local message=$2
+    # shellcheck disable=SC2155
     local hostname=$(hostname)
+    # shellcheck disable=SC2155
     local script_name=$(basename "$0")
     echo -e "Subject: $script_name $status on $hostname\n\n$message" | ssmtp "$EMAIL"
     # Reset the LED to the default state
@@ -48,6 +50,7 @@ check_directory() {
 create_directory() {
     local dir=$1
     mkdir -p "$dir"
+    # shellcheck disable=SC2181
     if [ $? -ne 0 ]; then
         log "Failed to create directory $dir."
         beep 3 5
