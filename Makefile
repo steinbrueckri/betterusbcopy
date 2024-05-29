@@ -1,4 +1,4 @@
-.PHONY: lint shellcheck mdl deploy setup-udev deploy-betterusbcopy
+.PHONY: lint shellcheck mdl deploy setup-udev deploy-betterusbcopy-config deploy-betterusbcopy
 
 # load config
 include .env
@@ -17,7 +17,7 @@ mdl:
 	@mdl README.md
 	@echo "👌 All OK"
 
-deploy: setup-udev deploy-betterusbcopy
+deploy: setup-udev deploy-betterusbcopy-config deploy-betterusbcopy
 
 setup-udev:
 	@echo "👷 Copy src/99-betterusbcopy.rules to /lib/udev/rules.d/99-betterusbcopy.rules on $(REMOTE_HOST)"
@@ -33,4 +33,10 @@ deploy-betterusbcopy:
 	@scp -O ./src/betterusbcopy $(REMOTE_USER)@$(REMOTE_HOST):/tmp/betterusbcopy
 	@ssh $(REMOTE_USER)@$(REMOTE_HOST) "sudo mv /tmp/betterusbcopy /usr/local/bin/betterusbcopy"
 	@ssh $(REMOTE_USER)@$(REMOTE_HOST) "sudo chmod +x /usr/local/bin/betterusbcopy"
+	@echo "🎉 All OK"
+
+deploy-betterusbcopy-config:
+	@echo "👷 Copy .env to /usr/etc/betterusbcopy.conf on $(REMOTE_HOST)"
+	@scp -O .env $(REMOTE_USER)@$(REMOTE_HOST):/tmp/betterusbcopy.conf
+	@ssh $(REMOTE_USER)@$(REMOTE_HOST) "sudo mv /tmp/betterusbcopy.conf /usr/etc/betterusbcopy.conf"
 	@echo "🎉 All OK"
