@@ -14,6 +14,15 @@ log() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - $message" >> "$LOGFILE"
 }
 
+LED() {
+  STATUS="$1"
+  if [ "$STATUS" = "on" ]; then
+    printf "\\x3b" > /dev/ttyS1
+  else
+    printf "\\x38" > /dev/ttyS1
+  fi
+}
+
 send_mail() {
     local status=$1
     local message=$2
@@ -23,7 +32,7 @@ send_mail() {
     local script_name=$(basename "$0")
     echo -e "Subject: $script_name $status on $hostname\n\n$message" | ssmtp "$EMAIL"
     # Reset the LED to the default state
-    echo 8 > /dev/ttyS1
+    LED off
 }
 
 beep() {
@@ -100,8 +109,8 @@ log "Script started."
 # Play a tone when the script starts (2x short beep)
 beep 2 2
 
-# Turn on the USBCopy LED (flashing green)
-echo A > /dev/ttyS1
+# Turn on LED
+LED on
 
 # Wait for the source directory to be mounted
 wait_for_mount "$SRC"
@@ -128,6 +137,6 @@ umount "$SRC"
 log "Unmounted $SRC."
 
 # Turn off the USBCopy LED
-echo 8 > /dev/ttyS1
+LED off
 
 log "Script ended."
